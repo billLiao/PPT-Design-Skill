@@ -3,7 +3,7 @@
 
 ## 安装（npx skills）
 ```bash
-npx skills add billLiao/PPT-Design-Skill --skill pptx
+npx skills add billLiao/PPT-Design-Skill --skill ppt-design-skill
 ```
 
 ## 触发方式
