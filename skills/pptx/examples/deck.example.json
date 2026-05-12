@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "Magazine × E-ink",
+    "subtitle": "用预置主题生成 PPTX",
+    "author": "pptx skill",
+    "date": "2026-05-12"
+  },
+  "defaults": {
+    "variant": "light"
+  },
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "Vol.01 · Demo",
+      "title": "一人公司",
+      "subtitle": "被 AI 折叠的组织",
+      "lead": "结构优于装饰。用字体对比与留白做层级。",
+      "meta": ["Audience: 内部分享", "Length: 15min"],
+      "foot": ["电子杂志×电子墨水", "— 2026 —"]
+    },
+    {
+      "type": "section",
+      "title": "Act I",
+      "subtitle": "硬数据",
+      "kicker": "Act I"
+    },
+    {
+      "type": "big-number",
+      "kicker": "Proof",
+      "title": "过去 64 天",
+      "items": [
+        { "label": "Duration", "value": "64", "unit": "天", "note": "从 0 到现在" },
+        { "label": "Lines", "value": "110K+", "note": "累计代码" },
+        { "label": "Commits", "value": "608+", "note": "持续迭代" },
+        { "label": "Stars", "value": "5,166", "note": "开源反馈" },
+        { "label": "Downloads", "value": "41K+", "note": "装到很多台电脑里" },
+        { "label": "Providers", "value": "19", "note": "多模型接入" }
+      ],
+      "foot": ["Page 03 · Numbers", "— · —"]
+    },
+    {
+      "type": "two-column",
+      "kicker": "BUT",
+      "title": "我不是程序员。",
+      "left": {
+        "lead": "大学毕业后再也没写过代码。过去十年做 UI 设计与特效。"
+      },
+      "right": {
+        "caption": "右侧可放截图/照片（本示例不放图）"
+      },
+      "callout": {
+        "text": "这东西在三年前，需要一个十人团队做一年。",
+        "source": "一个观察者"
+      },
+      "foot": ["Page 04 · The Twist", "— · —"]
+    },
+    {
+      "type": "pipeline",
+      "title": "两条流水线",
+      "kicker": "Workflow",
+      "lanes": [
+        {
+          "label": "内容侧",
+          "steps": [
+            { "title": "收集素材", "desc": "文档、数据、截图、链接" },
+            { "title": "提炼观点", "desc": "3-5 个关键判断" },
+            { "title": "选择版式", "desc": "每页都要有视觉元素" }
+          ]
+        },
+        {
+          "label": "制作侧",
+          "steps": [
+            { "title": "套主题", "desc": "选 1 套预置主题" },
+            { "title": "排版", "desc": "网格与留白优先" },
+            { "title": "自检", "desc": "避免遮挡、溢出、低对比" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "variant": "dark",
+      "quote": "克制优于炫技。",
+      "source": "设计原则"
+    },
+    {
+      "type": "before-after",
+      "title": "Before / After",
+      "before": ["只做标题+要点", "所有页同一版式", "配色随意"],
+      "after": ["预置主题统一风格", "至少 4 种版式混用", "每页一个视觉焦点"]
+    },
+    {
+      "type": "question",
+      "question": "如果只保留一页，你希望观众记住什么？",
+      "kicker": "ONE THING"
+    }
+  ]
+}

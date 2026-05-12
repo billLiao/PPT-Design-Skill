@@ -1,0 +1,47 @@
+{
+  "ink-classic": {
+    "label": "墨水经典",
+    "ink": "0A0A0B",
+    "inkTint": "18181A",
+    "paper": "F1EFEA",
+    "paperTint": "E8E5DE",
+    "accent": "0A0A0B",
+    "fonts": { "head": "Georgia", "body": "Calibri", "mono": "Consolas" }
+  },
+  "indigo-porcelain": {
+    "label": "靛蓝瓷",
+    "ink": "0A1F3D",
+    "inkTint": "152A4A",
+    "paper": "F1F3F5",
+    "paperTint": "E4E8EC",
+    "accent": "0A1F3D",
+    "fonts": { "head": "Cambria", "body": "Calibri", "mono": "Consolas" }
+  },
+  "forest-ink": {
+    "label": "森林墨",
+    "ink": "1A2E1F",
+    "inkTint": "253D2C",
+    "paper": "F5F1E8",
+    "paperTint": "ECE7DA",
+    "accent": "1A2E1F",
+    "fonts": { "head": "Cambria", "body": "Calibri", "mono": "Consolas" }
+  },
+  "kraft-paper": {
+    "label": "牛皮纸",
+    "ink": "2A1E13",
+    "inkTint": "3A2A1D",
+    "paper": "EEDFC7",
+    "paperTint": "E0D0B6",
+    "accent": "2A1E13",
+    "fonts": { "head": "Georgia", "body": "Calibri", "mono": "Consolas" }
+  },
+  "dune": {
+    "label": "沙丘",
+    "ink": "1F1A14",
+    "inkTint": "2D2620",
+    "paper": "F0E6D2",
+    "paperTint": "E3D7BF",
+    "accent": "1F1A14",
+    "fonts": { "head": "Cambria", "body": "Calibri", "mono": "Consolas" }
+  }
+}
