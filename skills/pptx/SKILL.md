@@ -1,5 +1,5 @@
 ---
-name: pptx
+name: ppt-design-skill
 description: "当用户需要创建或输出 .pptx（演示文稿/幻灯片/slide deck/pitch deck/路演材料）时使用此技能。该技能提供 5 套预置主题（电子杂志×电子墨水风格）与 10 种常用版式模板，并通过脚本直接生成可下载的 .pptx 文件；适合从大纲/文档快速生成一份有设计感的演示稿。"
 license: MIT
 ---
