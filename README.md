@@ -3,7 +3,7 @@
 
 ## 安装（npx skills）
 ```bash
-npx skills add <你的仓库URL> --skill pptx
+npx skills add billLiao/PPT-Design-Skill --skill pptx
 ```
 
 ## 触发方式
@@ -23,3 +23,7 @@ node scripts/build.mjs --input /absolute/path/to/deck.json --output /absolute/pa
 ## 技能说明
 - 技能主文件：[SKILL.md](file:///workspace/skills/pptx/SKILL.md)
 - 详细用法：[README.md](file:///workspace/skills/pptx/README.md)
+
+## 参考项目
+- [anthropics/skills PPTX](https://github.com/anthropics/skills/tree/main/skills/pptx)
+- [op7418/guizang-ppt-skill](https://github.com/op7418/guizang-ppt-skill)
