@@ -1,0 +1,8 @@
+{
+  "name": "ppt-design-skill-examples",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}

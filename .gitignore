@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 锁文件（示例目录除外，如果需要）
+/package-lock.json
+/yarn.lock
+
+# 生成的输出文件
+*.pptx
+
+# 生成的图片/缩略图
+*.jpg
+*.jpeg
+*.png
+*.gif
+!references/**/*.png
+
+# PDF 中间文件
+*.pdf
+
+# IDE
+.vscode/
+.idea/
+.trae/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 临时文件
+tmp/
+temp/
+*.tmp
