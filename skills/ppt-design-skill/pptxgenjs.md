@@ -345,6 +345,13 @@ slide.addChart(pres.charts.BAR, chartData, {
 - `lineSmooth: true` - curved lines (line charts)
 - `legendPos: "r"` - legend position: "b", "t", "l", "r", "tr"
 
+### Chart Corruption Gotchas
+
+- **Keep charts native** — use `addChart()` for everything PowerPoint can chart. Only chart types PowerPoint has no native form for (Sankey, network, chord) go in as images.
+- **On a stacked bar or column chart, `dataLabelPosition` must be `ctr`, `inEnd`, or `inBase`.** `outEnd` **corrupts the file**.
+- **A combo series using `secondaryValAxis`/`secondaryCatAxis` needs both `valAxes` and `catAxes` on the chart options, two entries each.** Supplying only `valAxes` is not enough — PowerPoint discards that chart and reports the file as corrupt.
+- **After `writeFile()`, run `python scripts/office/validate.py output.pptx`** — it reports the two chart faults above and other slide-XML defects, naming the fix for each. Fix them in your generator, not by hand-editing the packed XML.
+
 ---
 
 ## Slide Masters

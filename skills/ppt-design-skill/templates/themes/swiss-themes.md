@@ -7,10 +7,9 @@
 ## 使用方法
 
 1. 问用户选哪套（或基于内容推荐一套）
-2. 打开 `assets/template-swiss.html` 的 `<style>` 块
-3. 找到开头的 `:root{` 块
-4. **整体替换**标有"主题色"注释的所有变量：`--paper` / `--paper-rgb` / `--ink` / `--ink-rgb` / `--grey-1` / `--grey-2` / `--grey-3` / `--accent` / `--accent-rgb` / `--accent-on`
-5. 其他 CSS 都走 `var(--...)`,无需任何其他改动
+2. 色值映射到 PptxGenJS 配置：`paper` → 浅底，`ink` → 深底/正文，`grey-1` → 卡片底（paperTint），`grey-2`/`grey-3` → 次级文字/分隔线，`accent` → 强调色，`accent-on` → accent 底上的文字色
+3. 完整 PptxGenJS 主题代码见 [design-system.md](../design-system.md)「主题色 Themes」一节
+4. 一份 deck 只用一套主题，只切换明暗变体
 
 ---
 
@@ -33,8 +32,8 @@
 ```
 
 **使用要点**：
-- IKB 是高饱和深蓝,在大色块（如 `.accent-block`）上极有视觉冲击
-- KPI 数字加 `.accent` 类用蓝色,但不要满屏蓝——IKB 一旦泛滥就掉档
+- IKB 是高饱和深蓝,在大色块（S12 横幅、S03 半屏）上极有视觉冲击
+- KPI 数字用 accent 蓝,但不要满屏蓝——IKB 一旦泛滥就掉档
 - 推荐配合 `dark` 主题页交替使用,黑底高亮 IKB 同样高级
 
 ---
@@ -129,7 +128,6 @@
 
 - **一份 deck 只用一套主题**,不要中途换 accent 色
 - 灰阶变量（`--grey-1/2/3`）在 4 套主题里完全相同,无需调整
-- WebGL 网格背景会自动读取 `--accent` 变量,翻页时鼠标附近会偷渡一抹高亮色
 - 选定主题后,可以在 chrome 文案里用一个相关词强化语义（如 IKB 配 `International / Helvetica` ,柠檬黄配 `Active / Living`）
 
 ---

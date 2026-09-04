@@ -114,7 +114,7 @@ ratio:21:9, background:grid, padding:standard, inset:subtle, shadow:none, corner
 | 原始素材 | 推荐处理 |
 |---|---|
 | 普通网页 / App / 桌面截图 | 程序化适配到目标比例 |
-| 产品 UI 细节很重要 | 程序化适配,使用 `fit-contain`,不重画 |
+| 产品 UI 细节很重要 | 程序化画布适配（等比缩放+留边）,不重画 |
 | 长网页截图 | 截关键区域或拆成 2-3 张同尺寸面板 |
 | 极窄 / 极高截图 | 先尝试 `spacious + side alignment`;仍太小时再重构 |
 | 代码截图 | Style A 用纸感背景;Style B 用浅网格背景;文字必须可读 |

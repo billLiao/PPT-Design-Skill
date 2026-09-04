@@ -7,10 +7,9 @@
 ## 使用方法
 
 1. 问用户选哪套(或基于内容推荐一套)
-2. 打开 `assets/template.html` 的 `<style>` 块
-3. 找到开头的 `:root{` 块
-4. **整体替换**标有"主题色"注释的那几行 `--ink` / `--ink-rgb` / `--paper` / `--paper-rgb` / `--paper-tint` / `--ink-tint`
-5. 其他 CSS 都走 `var(--...)`,无需任何其他改动
+2. 色值映射到 PptxGenJS 配置:`ink` → 深底/正文色,`paper` → 浅底色,`paper-tint` → 卡片底,`ink-tint` → 深底变体,accent 见 design-system.md 各主题的 `accent`
+3. 完整 PptxGenJS 主题代码见 [design-system.md](../design-system.md)「主题色 Themes」一节
+4. 一份 deck 只用一套主题,只切换明暗变体
 
 ---
 
@@ -109,7 +108,6 @@
 ## 切换原则
 
 - **一份 deck 只用一套主题**,不要中途换色
-- WebGL shader 的默认主色(钛金色散 / 银色流动)适配所有 5 套(经测试可接受)
 - `currentColor` 驱动的 border / icon 会跟随 section 的 text color 自动适配,无需额外调整
 - 选定主题后,`<title>` 文字和 `chrome` 文案可以强化该主题的语义(例如牛皮纸配"Vol.03 · 秋"这种)
 
@@ -117,6 +115,6 @@
 
 - ❌ **不允许混搭**(例如 ink 取墨水经典的,paper 取沙丘的)——会彻底违和
 - ❌ **不允许用户随便给一个 hex 值**——需委婉拒绝并展示 5 套预设让选
-- ❌ **不要直接修改 template.html 其他地方的颜色**——所有散落 rgba 都走 var,改 :root 一处即可
+- ❌ **不要在主题外自造 hex**——所有颜色都来自主题变量,包括 tint 层
 
 选定主题后在 skill 对话中告诉用户:"用 🖋 墨水经典 / 🌊 靛蓝瓷 ..."并在 deck 项目记录里备注,方便后续迭代时保持一致。

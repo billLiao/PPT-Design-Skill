@@ -213,43 +213,44 @@ const themeSwissOrange = {
 
 ## 字体体系 Typography
 
+**写进 pptx 的字体由用户的 PowerPoint 渲染**。只用 Office 安全字体——网页字体（Inter / Playfair Display / Noto 系列）用户机器上没有，会 fallback 到宋体，设计感直接垮掉。
+
 ### 杂志风字体
 
-| 角色 | 字体 | 用途 |
-|------|------|------|
-| 标题（衬线） | Playfair Display / Noto Serif SC | 大标题、封面、引用 |
-| 正文（无衬线） | Noto Sans SC / Calibri | 段落、列表、说明 |
-| 标注（等宽） | IBM Plex Mono / Consolas | 数据标签、页码、元数据 |
+| 角色 | 中文 deck | 英文 deck | 用途 |
+|------|-----------|-----------|------|
+| 标题（衬线） | 华文中宋 STZhongsong | Cambria | 大标题、封面、引用 |
+| 正文（无衬线） | 微软雅黑 Microsoft YaHei | Calibri | 段落、列表、说明 |
+| 标注（等宽） | Consolas | Consolas | 数据标签、页码、元数据 |
 
 ```javascript
 const fontsMagazine = {
-  title: "Playfair Display",
-  titleFallback: "Noto Serif SC",
-  body: "Noto Sans SC",
-  bodyFallback: "Calibri",
-  mono: "IBM Plex Mono",
-  monoFallback: "Consolas"
+  title: "STZhongsong",   // 英文 deck 用 "Cambria"
+  body: "Microsoft YaHei", // 英文 deck 用 "Calibri"
+  mono: "Consolas"
 };
 ```
 
 ### 瑞士风字体
 
-| 角色 | 字体 | 用途 |
-|------|------|------|
-| 标题（无衬线） | Inter / Helvetica / Noto Sans SC Bold | 所有标题，极致字号对比 |
-| 正文（无衬线） | Inter / Noto Sans SC | 段落、列表 |
-| 标注（等宽） | IBM Plex Mono | 数据、标签、网格坐标 |
+| 角色 | 中文 deck | 英文 deck | 用途 |
+|------|-----------|-----------|------|
+| 标题（无衬线粗） | 微软雅黑 Microsoft YaHei（bold） | Arial（bold） | 所有标题，极致字号对比 |
+| 正文（无衬线） | 微软雅黑 Microsoft YaHei | Arial | 段落、列表 |
+| 标注（等宽） | Consolas | Consolas | 数据、标签、网格坐标 |
 
 ```javascript
 const fontsSwiss = {
-  title: "Inter",
-  titleFallback: "Helvetica",
-  body: "Inter",
-  bodyFallback: "Noto Sans SC",
-  mono: "IBM Plex Mono",
-  monoFallback: "Consolas"
+  title: "Microsoft YaHei", // 英文 deck 用 "Arial"
+  body: "Microsoft YaHei",  // 英文 deck 用 "Arial"
+  mono: "Consolas"
 };
 ```
+
+**规则**：
+- 用户明确指定字体时照做，但该文本框字号预留 ~10% 余量（QA 渲染宽度不可信）
+- Mac 用户：微软雅黑缺失时系统 fallback 苹方，可接受；不要主动写 PingFang（Windows 没有）
+- 数字和英文标签一律用 mono，与中文正文区分
 
 ### 字号规范
 
@@ -268,7 +269,7 @@ const fontsSwiss = {
 
 ### 杂志风版式
 
-详细骨架和 HTML/CSS 参考见 `templates/layouts/magazine-layouts.md`。以下为 PptxGenJS 坐标映射。
+**完整可运行代码见 `templates/layouts/magazine-layouts.md`（权威来源）**，以下为坐标速查。自适应规则（条目增减、文字超长）见 `references/design-playbook.md` 第 4 节。
 
 #### cover — 开场封面
 暗底，大字号衬线标题居中，副标题和元数据上下分布。
@@ -436,14 +437,14 @@ const layoutMixed = {
 
 ### 瑞士风版式
 
-瑞士风使用 12列网格系统，强调极致的字号对比和无衬线字体层级。
-详细版式定义见 `templates/layouts/swiss-layouts.md`。
+**S01-S22 完整实现见 `templates/layouts/swiss-layouts.md`（权威来源）**。以下为网格系统速查。
 
 核心原则：
 - 所有元素对齐到 12列网格
 - 标题使用超大字号（48-60pt），正文保持克制（14-16pt）
 - 高反差功能色仅用于强调和数据
 - 留白是设计的一部分
+- 标题一律左上对齐（S03/S09/S10 statement 版式除外）
 
 ```javascript
 // 瑞士风网格常量 (10" 宽)

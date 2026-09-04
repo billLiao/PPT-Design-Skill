@@ -12,7 +12,8 @@ license: Proprietary. LICENSE.txt has complete terms
 |------|-------|
 | Read/analyze content | `python -m markitdown presentation.pptx` |
 | Edit or create from template | Read [editing.md](editing.md) |
-| Create from scratch | Read [pptxgenjs.md](pptxgenjs.md) |
+| Create from scratch | **规划 → 生成 → QA**（见下方 Creating from Scratch） |
+| Design decisions (叙事/节奏/自适应) | Read [references/design-playbook.md](references/design-playbook.md) |
 | Design themes & layouts | Read [design-system.md](design-system.md) |
 
 ---
@@ -43,9 +44,26 @@ python scripts/office/unpack.py presentation.pptx unpacked/
 
 ## Creating from Scratch
 
-**Read [pptxgenjs.md](pptxgenjs.md) for full details.**
+**Creation workflow（三段式，顺序固定）：**
 
-Use when no template or reference presentation is available.
+### Step 1 · 规划（必做，禁止跳过）
+
+**Read [references/design-playbook.md](references/design-playbook.md)** — 叙事弧、页面规划表、明暗节奏、版式决策树、自适应规则、中文排版、密度控制。
+
+产出页面规划表（页码 → 版式 → 明暗 → 内容形状 → 视觉元素）后再写代码。
+
+### Step 2 · 生成
+
+**Read [pptxgenjs.md](pptxgenjs.md)** for API details and corruption gotchas.
+
+- 主题与配色：[design-system.md](design-system.md)（9 主题，只用安全字体）
+- 版式代码：杂志风 [templates/layouts/magazine-layouts.md](templates/layouts/magazine-layouts.md) / 瑞士风 [templates/layouts/swiss-layouts.md](templates/layouts/swiss-layouts.md)
+- 组件配方：[templates/components.md](templates/components.md)
+- 瑞士风硬约束：[references/swiss-layout-lock.md](references/swiss-layout-lock.md)
+
+### Step 3 · QA
+
+按 [references/checklist.md](references/checklist.md) P0-P3 检查（见下方 QA 节）。
 
 ---
 
@@ -64,8 +82,10 @@ Use when no template or reference presentation is available.
 
 For pre-built themes and layout coordinates, see [design-system.md](design-system.md). It provides:
 - **9 built-in themes** (5 magazine + 4 Swiss) with ready-to-use PptxGenJS color configs
-- **32 layout templates** with x/y/w/h coordinates for common slide patterns
-- **Font pairings** for both magazine (serif) and Swiss (sans-serif) styles
+- **32 layout templates** — 完整代码见 templates/layouts/（杂志 10 + 瑞士 22）
+- **Office 安全字体** pairings for both magazine (serif) and Swiss (sans-serif) styles
+
+**规划先行**：写代码前先读 [references/design-playbook.md](references/design-playbook.md)，产出页面规划表。版式坐标是基线不是牢房——按 playbook 第 4 节的自适应规则变形。
 
 **7-Question Clarification** (optional best practice when user has only a vague idea):
 1. **Audience & scenario**: Roadshow / internal share / tech launch / portfolio / academic?
@@ -179,23 +199,23 @@ Pre-configured themes with PptxGenJS-ready color values. See [design-system.md](
 
 #### Design System Font Pairings
 
-For built-in themes, use these pre-mapped pairings (see [design-system.md](design-system.md)):
+For built-in themes, use these pre-mapped pairings (see [design-system.md](design-system.md)). **只用 Office 安全字体**——用户机器上没有的字体（Inter / Playfair / Noto 系列）会 fallback 到宋体：
 
 **Magazine Style** (serif headers, editorial):
 
-| Role | Font | Fallback |
-|------|------|----------|
-| Title (serif) | Playfair Display | Noto Serif SC |
-| Body (sans) | Noto Sans SC | Calibri |
-| Mono (labels) | IBM Plex Mono | Consolas |
+| Role | 中文 deck | 英文 deck |
+|------|-----------|-----------|
+| Title (serif) | STZhongsong（华文中宋） | Cambria |
+| Body (sans) | Microsoft YaHei | Calibri |
+| Mono (labels) | Consolas | Consolas |
 
 **Swiss Style** (sans-serif throughout, grid-driven):
 
-| Role | Font | Fallback |
-|------|------|----------|
-| Title (sans) | Inter | Helvetica |
-| Body (sans) | Inter | Noto Sans SC |
-| Mono (labels) | IBM Plex Mono | Consolas |
+| Role | 中文 deck | 英文 deck |
+|------|-----------|-----------|
+| Title (sans bold) | Microsoft YaHei | Arial |
+| Body (sans) | Microsoft YaHei | Arial |
+| Mono (labels) | Consolas | Consolas |
 
 | Element | Size |
 |---------|------|
@@ -322,17 +342,17 @@ Before declaring success, run through `references/checklist.md` (P0-P3 levels):
 
 | Document | Content |
 |----------|---------|
-| [design-system.md](design-system.md) | 9 built-in themes (5 magazine + 4 Swiss), 32 layout templates with PptxGenJS coordinates, font pairings |
+| [design-system.md](design-system.md) | 9 built-in themes (5 magazine + 4 Swiss), layout coordinate quick-reference, safe font pairings |
+| [references/design-playbook.md](references/design-playbook.md) | **设计决策手册：叙事弧、页面规划表、明暗节奏、版式决策树、自适应规则、中文排版、密度控制（写代码前必读）** |
 | [templates/themes/magazine-themes.md](templates/themes/magazine-themes.md) | 5 magazine theme color details |
 | [templates/themes/swiss-themes.md](templates/themes/swiss-themes.md) | 4 Swiss theme color details |
-| [templates/layouts/magazine-layouts.md](templates/layouts/magazine-layouts.md) | 10 magazine layout skeletons |
-| [templates/layouts/swiss-layouts.md](templates/layouts/swiss-layouts.md) | 22 Swiss layout skeletons |
-| [templates/components.md](templates/components.md) | Component handbook (grids, icons, callouts, stats) |
-| [references/checklist.md](references/checklist.md) | P0-P3 quality checklist |
+| [templates/layouts/magazine-layouts.md](templates/layouts/magazine-layouts.md) | 10 magazine layouts — complete PptxGenJS code + variants (authoritative) |
+| [templates/layouts/swiss-layouts.md](templates/layouts/swiss-layouts.md) | 22 Swiss layouts S01-S22 — complete PptxGenJS code (authoritative) |
+| [templates/components.md](templates/components.md) | Component cookbook (stat cards, callouts, icon rows, charts, chrome) |
+| [references/checklist.md](references/checklist.md) | P0-P3 quality checklist (.pptx specific) |
 | [references/image-prompts.md](references/image-prompts.md) | Image generation prompt guide |
 | [references/screenshot-framing.md](references/screenshot-framing.md) | Screenshot adaptation specs |
-| [references/swiss-layout-lock.md](references/swiss-layout-lock.md) | 22 registered Swiss layouts, hard constraints & forbidden patterns |
-| [references/swiss-map-component.md](references/swiss-map-component.md) | S08 Duo Compare map extension (MapLibre + static fallback) |
+| [references/swiss-layout-lock.md](references/swiss-layout-lock.md) | 22 registered Swiss layouts, hard constraints |
 
 ---
 

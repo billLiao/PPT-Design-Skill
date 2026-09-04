@@ -63,12 +63,14 @@ node demo-swiss.mjs     # → demo-swiss.pptx
 
 | Document | Content |
 |----------|---------|
-| [SKILL.md](skills/ppt-design-skill/SKILL.md) | Skill entry point: workflows, QA loop, checklists |
-| [design-system.md](skills/ppt-design-skill/design-system.md) | 9 themes + 32 layouts with PptxGenJS configs |
-| [pptxgenjs.md](skills/ppt-design-skill/pptxgenjs.md) | PptxGenJS API tutorial & gotchas |
+| [SKILL.md](skills/ppt-design-skill/SKILL.md) | Skill entry point: 规划 → 生成 → QA workflow |
+| [references/design-playbook.md](skills/ppt-design-skill/references/design-playbook.md) | **设计决策手册**: narrative arcs, page planning, theme rhythm, layout decision tree, adaptive rules, Chinese typography, density control |
+| [design-system.md](skills/ppt-design-skill/design-system.md) | 9 themes + layout coordinate quick-reference + Office-safe font pairings |
+| [pptxgenjs.md](skills/ppt-design-skill/pptxgenjs.md) | PptxGenJS API tutorial & corruption gotchas |
 | [editing.md](skills/ppt-design-skill/editing.md) | Editing existing .pptx files (unpack → edit → pack) |
-| [templates/](skills/ppt-design-skill/templates/) | Theme details, layout skeletons, component handbook |
-| [references/](skills/ppt-design-skill/references/) | P0–P3 checklist, image prompts, Swiss layout locks |
+| [templates/layouts/](skills/ppt-design-skill/templates/layouts/) | Complete PptxGenJS layout code: 10 magazine + 22 Swiss (S01-S22) |
+| [templates/components.md](skills/ppt-design-skill/templates/components.md) | Component cookbook (stat cards, callouts, icon rows, charts) |
+| [references/checklist.md](skills/ppt-design-skill/references/checklist.md) | P0–P3 QA checklist (.pptx specific, with no-LibreOffice fallback) |
 
 ## 📄 License
 
@@ -83,7 +85,20 @@ This repository contains materials derived from [anthropics/skills](https://gith
 
 ## 中文说明
 
-一个 Agent Skill：**直接生成可编辑的 `.pptx` 文件，而不是 HTML**。基于 PptxGenJS，内置 9 套预置主题（5 套电子杂志风 + 4 套瑞士国际主义风）与 32 种页面版式模板，坐标全部调好，即拿即用。
+一个 Agent Skill：**直接生成可编辑的 `.pptx` 文件，而不是 HTML**。基于 PptxGenJS，内置 9 套预置主题（5 套电子杂志风 + 4 套瑞士国际主义风）与 32 种页面版式模板（全部提供完整可运行代码）。
+
+### 生成流程（v2 重构核心）
+
+```
+规划（叙事弧 + 页面规划表 + 明暗节奏） → 生成（版式代码 + 自适应规则） → QA（P0-P3 检查清单）
+```
+
+- **版式是基线不是牢房**：每个版式标注内容形状（几项 × 几字），条目增减按自适应公式变形，不再硬塞固定坐标
+- **只用 Office 安全字体**：中文 deck 用华文中宋 / 微软雅黑 / Consolas，英文 deck 用 Cambria / Calibri / Arial——网页字体在用户机器上会 fallback 宋体
+- **中文排版分档**：字号分档、字重阶梯、每页 ≤ 90 字密度控制
+- **原生图表优先**：排名/趋势/构成用 addChart，附防损坏 gotcha
+
+详见 [设计决策手册](skills/ppt-design-skill/references/design-playbook.md)。
 
 ### 安装
 
