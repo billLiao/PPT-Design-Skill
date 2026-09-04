@@ -24,6 +24,7 @@ yarn-error.log*
 *.png
 *.gif
 !references/**/*.png
+!docs/**/*.png
 
 # PDF 中间文件
 *.pdf
