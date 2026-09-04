@@ -57,7 +57,7 @@ python scripts/office/unpack.py presentation.pptx unpacked/
 **Read [pptxgenjs.md](pptxgenjs.md)** for API details and corruption gotchas.
 
 - 主题与配色：[design-system.md](design-system.md)（9 主题，只用安全字体）
-- 版式代码：杂志风 [templates/layouts/magazine-layouts.md](templates/layouts/magazine-layouts.md) / 瑞士风 [templates/layouts/swiss-layouts.md](templates/layouts/swiss-layouts.md)
+- 版式代码：杂志风 [templates/layouts/magazine-layouts.md](templates/layouts/magazine-layouts.md) / 瑞士风 [templates/layouts/swiss-layouts.md](templates/layouts/swiss-layouts.md) / 分析模型 [templates/layouts/analysis-models.md](templates/layouts/analysis-models.md)（SWOT/PEST/画布/双钻/竞争定位）
 - 组件配方：[templates/components.md](templates/components.md)
 - 瑞士风硬约束：[references/swiss-layout-lock.md](references/swiss-layout-lock.md)
 
@@ -95,6 +95,8 @@ For pre-built themes and layout coordinates, see [design-system.md](design-syste
 5. **Style preference**: Serif titles with warm tones, or sans-serif with high-contrast accent colors?
 6. **Language**: Chinese / English / bilingual?
 7. **Deliverables**: PPTX only / also need cover images / also need web version?
+
+**风格画廊技巧**（借鉴 humanize-ppt）：用户对主题犹豫时，不要盲选——用 2-4 套候选主题各渲染一张封面给用户挑，选定后再出全 deck。
 
 **Theme usage rhythm**:
 ```
@@ -326,13 +328,13 @@ Before declaring success, run through `references/checklist.md` (P0-P3 levels):
 - [ ] Cross-device compatible fonts used
 - [ ] Print preview readable in grayscale
 
-### Verification Loop
+**Verification Loop**
 
 1. Generate slides → Convert to images → Inspect
 2. **List issues found** (if none found, look again more critically)
-3. Fix issues
+3. Fix issues — **按失败模式目录的修复顺序：内容 → 结构 → 版式 → 样式，不要从样式开始修**
 4. **Re-verify affected slides** — one fix often creates another problem
-5. Repeat until a full pass reveals no new issues
+5. Repeat until a full pass reveals no new issues. **最多 3 轮**；3 轮后仍有 P0 问题，向用户说明剩余问题，不要无限重试。
 
 **Do not declare success until you've completed at least one fix-and-verify cycle.**
 
@@ -348,6 +350,7 @@ Before declaring success, run through `references/checklist.md` (P0-P3 levels):
 | [templates/themes/swiss-themes.md](templates/themes/swiss-themes.md) | 4 Swiss theme color details |
 | [templates/layouts/magazine-layouts.md](templates/layouts/magazine-layouts.md) | 10 magazine layouts — complete PptxGenJS code + variants (authoritative) |
 | [templates/layouts/swiss-layouts.md](templates/layouts/swiss-layouts.md) | 22 Swiss layouts S01-S22 — complete PptxGenJS code (authoritative) |
+| [templates/layouts/analysis-models.md](templates/layouts/analysis-models.md) | Business analysis layouts: SWOT / PEST / business model canvas / double diamond / competitive positioning |
 | [templates/components.md](templates/components.md) | Component cookbook (stat cards, callouts, icon rows, charts, chrome) |
 | [references/checklist.md](references/checklist.md) | P0-P3 quality checklist (.pptx specific) |
 | [references/image-prompts.md](references/image-prompts.md) | Image generation prompt guide |

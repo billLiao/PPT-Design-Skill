@@ -68,7 +68,7 @@ node demo-swiss.mjs     # → demo-swiss.pptx
 | [design-system.md](skills/ppt-design-skill/design-system.md) | 9 themes + layout coordinate quick-reference + Office-safe font pairings |
 | [pptxgenjs.md](skills/ppt-design-skill/pptxgenjs.md) | PptxGenJS API tutorial & corruption gotchas |
 | [editing.md](skills/ppt-design-skill/editing.md) | Editing existing .pptx files (unpack → edit → pack) |
-| [templates/layouts/](skills/ppt-design-skill/templates/layouts/) | Complete PptxGenJS layout code: 10 magazine + 22 Swiss (S01-S22) |
+| [templates/layouts/](skills/ppt-design-skill/templates/layouts/) | Complete PptxGenJS layout code: 10 magazine + 22 Swiss (S01-S22) + analysis models (SWOT/PEST/canvas/double-diamond/positioning) |
 | [templates/components.md](skills/ppt-design-skill/templates/components.md) | Component cookbook (stat cards, callouts, icon rows, charts) |
 | [references/checklist.md](skills/ppt-design-skill/references/checklist.md) | P0–P3 QA checklist (.pptx specific, with no-LibreOffice fallback) |
 
