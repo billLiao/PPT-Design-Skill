@@ -1,0 +1,17 @@
+{
+  "name": "ink-classic",
+  "label": "墨水经典 Ink Classic",
+  "style": "magazine",
+  "description": "通用 / 商业发布 / 不知道选啥时的默认选择。像 Monocle 杂志贴上了代码。",
+  "colors": {
+    "ink": "0a0a0b",
+    "paper": "f1efea",
+    "paperTint": "e8e5de",
+    "inkTint": "18181a",
+    "accent": "d4a574",
+    "accentRgb": "212,165,116"
+  },
+  "background": { "color": "f1efea" },
+  "backgroundDark": { "color": "0a0a0b" },
+  "fonts": { "title": "STZhongsong", "body": "Microsoft YaHei", "mono": "Consolas" }
+}

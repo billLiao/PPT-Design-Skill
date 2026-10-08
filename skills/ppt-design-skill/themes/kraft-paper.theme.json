@@ -1,0 +1,17 @@
+{
+  "name": "kraft-paper",
+  "label": "牛皮纸 Kraft Paper",
+  "style": "magazine",
+  "description": "怀旧 / 人文 / 文学 / 独立杂志。像牛皮信封或老笔记本，温暖、有年代感。",
+  "colors": {
+    "ink": "2a1e13",
+    "paper": "eedfc7",
+    "paperTint": "e0d0b6",
+    "inkTint": "3a2a1d",
+    "accent": "b87333",
+    "accentRgb": "184,115,51"
+  },
+  "background": { "color": "eedfc7" },
+  "backgroundDark": { "color": "2a1e13" },
+  "fonts": { "title": "STZhongsong", "body": "Microsoft YaHei", "mono": "Consolas" }
+}

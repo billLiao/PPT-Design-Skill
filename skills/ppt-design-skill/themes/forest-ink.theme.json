@@ -1,0 +1,17 @@
+{
+  "name": "forest-ink",
+  "label": "森林墨 Forest Ink",
+  "style": "magazine",
+  "description": "自然 / 可持续 / 文化 / 非虚构。沉稳、有呼吸感，像旧版《国家地理》。",
+  "colors": {
+    "ink": "1a2e1f",
+    "paper": "f5f1e8",
+    "paperTint": "ece7da",
+    "inkTint": "253d2c",
+    "accent": "6b8e5a",
+    "accentRgb": "107,142,90"
+  },
+  "background": { "color": "f5f1e8" },
+  "backgroundDark": { "color": "1a2e1f" },
+  "fonts": { "title": "STZhongsong", "body": "Microsoft YaHei", "mono": "Consolas" }
+}

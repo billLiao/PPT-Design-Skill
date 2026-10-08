@@ -24,6 +24,7 @@
 - **一份 deck 只用一套主题**，不要中途换色
 - **不允许用户自定义 hex 值**——色彩搭配错了画面瞬间变丑，从以下预设中挑选
 - 所有颜色在 PptxGenJS 中使用 **6位 hex，不带 `#` 前缀**
+- **机器可读主题**：`themes/*.theme.json`（`python3 scripts/theme.py list` 查看）；用户自带品牌色走 [references/custom-themes.md](references/custom-themes.md) 的 extract 流程；deck 写完跑 `python3 scripts/qa/token_check.py <slides> --theme <name>` 门禁
 
 ### 杂志风 Magazine
 
@@ -506,6 +507,7 @@ pres.writeFile({ fileName: "output.pptx" });
 
 - 杂志风主题详情: `templates/themes/magazine-themes.md`
 - 瑞士风主题详情: `templates/themes/swiss-themes.md`
+- 自定义主题流程: [references/custom-themes.md](references/custom-themes.md)
 - 杂志风版式骨架: `templates/layouts/magazine-layouts.md`
 - 瑞士风版式骨架: `templates/layouts/swiss-layouts.md`
 - 组件手册: `templates/components.md`

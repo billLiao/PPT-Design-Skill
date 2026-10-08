@@ -1,0 +1,17 @@
+{
+  "name": "dune",
+  "label": "沙丘 Dune",
+  "style": "magazine",
+  "description": "艺术 / 设计 / 创意 / 画廊。克制、高级、中性，像沙漠黄昏或建筑设计图册。",
+  "colors": {
+    "ink": "1f1a14",
+    "paper": "f0e6d2",
+    "paperTint": "e3d7bf",
+    "inkTint": "2d2620",
+    "accent": "c4a265",
+    "accentRgb": "196,162,101"
+  },
+  "background": { "color": "f0e6d2" },
+  "backgroundDark": { "color": "1f1a14" },
+  "fonts": { "title": "STZhongsong", "body": "Microsoft YaHei", "mono": "Consolas" }
+}

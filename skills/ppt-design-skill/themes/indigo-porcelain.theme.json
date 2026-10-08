@@ -1,0 +1,17 @@
+{
+  "name": "indigo-porcelain",
+  "label": "靛蓝瓷 Indigo Porcelain",
+  "style": "magazine",
+  "description": "科技 / 研究 / AI / 技术发布会。冷静、理性、有深度，像学术期刊或蓝印花瓷器。",
+  "colors": {
+    "ink": "0a1f3d",
+    "paper": "f1f3f5",
+    "paperTint": "e4e8ec",
+    "inkTint": "152a4a",
+    "accent": "4a90a4",
+    "accentRgb": "74,144,164"
+  },
+  "background": { "color": "f1f3f5" },
+  "backgroundDark": { "color": "0a1f3d" },
+  "fonts": { "title": "STZhongsong", "body": "Microsoft YaHei", "mono": "Consolas" }
+}

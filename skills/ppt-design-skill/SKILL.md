@@ -26,7 +26,8 @@ The script pins an upstream commit for reproducibility (`--ref` to override) and
 | Create from scratch | **规划 → 生成 → QA**（见下方 Creating from Scratch） |
 | Design decisions (叙事/节奏/自适应) | Read [references/design-playbook.md](references/design-playbook.md) |
 | Design themes & layouts | Read [design-system.md](design-system.md) |
-| Deterministic QA gate | `scripts/qa/`（溢出 / 对比度 / 边缘，stdlib 独立） |
+| Theme tokens (list/validate/extract) | `python3 scripts/theme.py list` + [references/custom-themes.md](references/custom-themes.md) |
+| Deterministic QA gate | `scripts/qa/`（溢出 / 对比度 / 边缘 / token / 字体，stdlib 独立） |
 
 ---
 
@@ -62,6 +63,8 @@ python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacke
 
 **Read [references/design-playbook.md](references/design-playbook.md)** — 叙事弧、页面规划表、明暗节奏、版式决策树、自适应规则、中文排版、密度控制。
 
+**选主题**：`python3 scripts/theme.py list`（内置 9 套 + 项目 `./ppt-themes/` + 用户级）。发现项目/用户级主题 → 追问用户是否优先使用；用户自带品牌色 → [references/custom-themes.md](references/custom-themes.md) 的 extract 流程。
+
 产出页面规划表（页码 → 版式 → 明暗 → 内容形状 → 视觉元素）后再写代码。
 
 ### Step 2 · 生成
@@ -80,11 +83,13 @@ python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacke
 ```bash
 python3 scripts/qa/cjk_overflow_check.py output.pptx   # 文字溢出/越界（CJK 1em·半角 0.5em 估宽）
 python3 scripts/qa/contrast_check.py output.pptx       # WCAG 对比度（4.5:1 正文 / 3:1 大字）
+python3 scripts/qa/token_check.py slides/*.mjs --theme ink-classic  # 主题 token 门禁（硬编码色/字体即 fail）
+python3 scripts/qa/font_check.py output.pptx                        # Office 安全字体 + 本地可用性（fc-list）
 pdftoppm -png -r 150 output.pdf slide \
   && python3 scripts/qa/edge_check.py slide-*.png      # 渲染后边缘裁切/空页（纯 stdlib，PNG）
 ```
 
-三个脚本纯 stdlib、独立解析 OOXML（不依赖上游拉取件）。再按 [references/checklist.md](references/checklist.md) P0-P3 检查（见下方 QA 节）。
+五个脚本纯 stdlib、独立解析（不依赖上游拉取件）。再按 [references/checklist.md](references/checklist.md) P0-P3 检查（见下方 QA 节）。
 
 ---
 

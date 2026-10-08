@@ -1,0 +1,16 @@
+{
+  "name": "swiss-yellow",
+  "label": "柠檬黄 Lemon Yellow",
+  "style": "swiss",
+  "description": "活力、乐观。深色底 + 高饱和黄。",
+  "colors": {
+    "ink": "1a1a1a",
+    "paper": "f5f5f5",
+    "accent": "FFD700",
+    "accentLight": "fff8d6",
+    "grid": "d0d0d0"
+  },
+  "background": { "color": "f5f5f5" },
+  "backgroundDark": { "color": "1a1a1a" },
+  "fonts": { "title": "Microsoft YaHei", "body": "Microsoft YaHei", "mono": "Consolas" }
+}

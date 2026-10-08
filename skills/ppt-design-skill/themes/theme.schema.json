@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PPT Design Skill theme",
+  "description": "Machine-readable theme contract. Colors are 6-hex without '#' (PptxGenJS convention) or 'r,g,b' triplets for derived RGB tokens. Validated by scripts/theme.py validate; enforced on decks by scripts/qa/token_check.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "style", "colors", "fonts", "background", "backgroundDark"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "kebab-case; must match the filename <name>.theme.json (resolver looks themes up by filename)"
+    },
+    "label": { "type": "string", "description": "human-readable display name" },
+    "style": { "type": "string", "enum": ["magazine", "swiss", "custom"] },
+    "description": { "type": "string" },
+    "review": {
+      "type": "boolean",
+      "description": "true = extract draft, mappings need human confirmation before use"
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "extract draft: per-mapping provenance and what to double-check"
+    },
+    "colors": {
+      "type": "object",
+      "required": ["ink", "paper", "accent"],
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^(?:[0-9A-Fa-f]{6}|[0-9]{1,3},[0-9]{1,3},[0-9]{1,3})$"
+      },
+      "description": "semantic tokens; ink/paper/accent required, extras free-form (paperTint, inkTint, accentLight, grid, accentRgb ...)"
+    },
+    "background": { "$ref": "#/definitions/surface" },
+    "backgroundDark": { "$ref": "#/definitions/surface" },
+    "fonts": {
+      "type": "object",
+      "required": ["title", "body", "mono"],
+      "additionalProperties": { "type": "string", "minLength": 1 },
+      "description": "Office-safe fonts only (design-system.md § 字体体系)"
+    }
+  },
+  "definitions": {
+    "surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["color"],
+      "properties": {
+        "color": { "type": "string", "pattern": "^[0-9A-Fa-f]{6}$" }
+      }
+    }
+  }
+}
