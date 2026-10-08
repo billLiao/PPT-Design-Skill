@@ -26,6 +26,7 @@ The script pins an upstream commit for reproducibility (`--ref` to override) and
 | Create from scratch | **规划 → 生成 → QA**（见下方 Creating from Scratch） |
 | Design decisions (叙事/节奏/自适应) | Read [references/design-playbook.md](references/design-playbook.md) |
 | Design themes & layouts | Read [design-system.md](design-system.md) |
+| Deterministic QA gate | `scripts/qa/`（溢出 / 对比度 / 边缘，stdlib 独立） |
 
 ---
 
@@ -74,7 +75,16 @@ python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacke
 
 ### Step 3 · QA
 
-按 [references/checklist.md](references/checklist.md) P0-P3 检查（见下方 QA 节）。
+**确定性门禁（先跑，全 PASS 再进视觉检查；exit 0=PASS / 1=有违规，可入 CI）：**
+
+```bash
+python3 scripts/qa/cjk_overflow_check.py output.pptx   # 文字溢出/越界（CJK 1em·半角 0.5em 估宽）
+python3 scripts/qa/contrast_check.py output.pptx       # WCAG 对比度（4.5:1 正文 / 3:1 大字）
+pdftoppm -png -r 150 output.pdf slide \
+  && python3 scripts/qa/edge_check.py slide-*.png      # 渲染后边缘裁切/空页（纯 stdlib，PNG）
+```
+
+三个脚本纯 stdlib、独立解析 OOXML（不依赖上游拉取件）。再按 [references/checklist.md](references/checklist.md) P0-P3 检查（见下方 QA 节）。
 
 ---
 

@@ -31,6 +31,7 @@ for i, s in enumerate(p.slides, 1):
 ```
 
 ### 0-2. 文字边界
+- [ ] `python3 scripts/qa/cjk_overflow_check.py output.pptx` 通过（自动估宽：垂直溢出 / 不可断行 token / 越界形状）
 - [ ] 无文字溢出文本框 / 卡片 / 幻灯片边缘（中文按 字号×1.0 预估宽度）
 - [ ] 无元素超出画布（10" × 5.625"），坐标越界不会报错，只会不可见
 - [ ] 无元素互相重叠（文字穿过色块、线条压字）
@@ -54,6 +55,7 @@ for i, s in enumerate(p.slides, 1):
 - [ ] 明暗节奏：无连续 3 页同明暗；8 页以上有 ≥1 个深底正文页
 - [ ] 边距 ≥ 0.5"，内容块间距 0.3-0.5" 且全 deck 一致
 - [ ] 对比度：无浅底浅字 / 深底深字；深底上的 accent 文字已做提亮（如克莱因蓝在深底上不可读）
+- [ ] `python3 scripts/qa/contrast_check.py output.pptx` 通过（WCAG 4.5:1 正文 / 3.0:1 大字）
 - [ ] 正文左对齐（只有标题/大数字可居中）
 - [ ] 图表有数据标签、主题化配色、单系列隐藏图例
 - [ ] 每页正文 ≤ 90 字（中文），超标拆页
@@ -98,7 +100,8 @@ for i, s in enumerate(p.slides, 1):
 1. 转图片（需要 LibreOffice + poppler）：
    ```bash
    python scripts/office/soffice.py --headless --convert-to pdf output.pptx
-   pdftoppm -jpeg -r 150 output.pdf slide
+   pdftoppm -png -r 150 output.pdf slide
+   python3 scripts/qa/edge_check.py slide-*.png   # 边缘裁切/空页像素门禁（先跑，PASS 再人工看图）
    ```
 2. **用子代理看图**（自己盯代码会只看到预期）。逐页检查 P0-2 / P1 的每一项。
 3. 环境没有 LibreOffice 时，降级方案：
