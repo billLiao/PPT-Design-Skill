@@ -26,7 +26,7 @@ When using an existing presentation as a template:
 
    Match content type to layout style (e.g., key points → bullet slide, team info → multi-column, testimonials → quote slide).
 
-3. **Unpack**: `python scripts/office/unpack.py template.pptx unpacked/`
+3. **Extract**: `python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacked')" template.pptx`
 
 4. **Build presentation** (do this yourself, not with subagents):
    - Delete unwanted slides (remove from `<p:sldIdLst>`)
@@ -39,7 +39,13 @@ When using an existing presentation as a template:
 
 6. **Clean**: `python scripts/clean.py unpacked/`
 
-7. **Pack**: `python scripts/office/pack.py unpacked/ output.pptx --original template.pptx`
+7. **Pack & validate**:
+   ```bash
+   (cd unpacked && rm -f ../output.pptx && zip -Xr ../output.pptx .)
+   python scripts/office/validate.py output.pptx --original template.pptx
+   ```
+
+   Zip from INSIDE the directory; `rm` first or deleted parts survive. Always pass `--original` for template-derived decks — it baselines the template's own schema defects.
 
 ---
 
@@ -47,19 +53,10 @@ When using an existing presentation as a template:
 
 | Script | Purpose |
 |--------|---------|
-| `unpack.py` | Extract and pretty-print PPTX |
 | `add_slide.py` | Duplicate slide or create from layout |
 | `clean.py` | Remove orphaned files |
-| `pack.py` | Repack with validation |
+| `validate.py` | OOXML schema/relationship/chart checks; `--original` baselines template defects |
 | `thumbnail.py` | Create visual grid of slides |
-
-### unpack.py
-
-```bash
-python scripts/office/unpack.py input.pptx unpacked/
-```
-
-Extracts PPTX, pretty-prints XML, escapes smart quotes.
 
 ### add_slide.py
 
@@ -78,13 +75,14 @@ python scripts/clean.py unpacked/
 
 Removes slides not in `<p:sldIdLst>`, unreferenced media, orphaned rels.
 
-### pack.py
+### validate.py
 
 ```bash
-python scripts/office/pack.py unpacked/ output.pptx --original input.pptx
+python scripts/office/validate.py output.pptx                      # built from scratch
+python scripts/office/validate.py output.pptx --original input.pptx  # built from a template
 ```
 
-Validates, repairs, condenses XML, re-encodes smart quotes.
+Schema, relationship, content-type, chart and slide checks; each failure names its fix. Structural checks (relationships, content types, charts) ignore `--original` and report template-inherited problems either way.
 
 ### thumbnail.py
 
@@ -184,7 +182,7 @@ Copy `<a:pPr>` from the original paragraph to preserve line spacing. Use `b="1"`
 
 ### Smart Quotes
 
-Handled automatically by unpack/pack. But the Edit tool converts smart quotes to ASCII.
+The Edit tool converts smart quotes to ASCII, and the raw zip workflow does no re-encoding — so quotes must be written as XML entities.
 
 **When adding new text with quotes, use XML entities:**
 

@@ -45,3 +45,13 @@ Thumbs.db
 tmp/
 temp/
 *.tmp
+
+# Upstream Anthropic pptx runtime — fetched at install time by
+# scripts/setup_upstream.py, NOT redistributed by this repo (see README § License)
+skills/ppt-design-skill/LICENSE.txt
+skills/ppt-design-skill/upstream/
+skills/ppt-design-skill/scripts/__init__.py
+skills/ppt-design-skill/scripts/add_slide.py
+skills/ppt-design-skill/scripts/clean.py
+skills/ppt-design-skill/scripts/thumbnail.py
+skills/ppt-design-skill/scripts/office/

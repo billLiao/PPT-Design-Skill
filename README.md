@@ -10,13 +10,18 @@
 - 🎨 **9 built-in themes** — 5 magazine (serif, editorial warmth) + 4 Swiss (sans-serif, grid-driven, high-contrast)
 - 📐 **32 layout templates** — 10 magazine + 22 Swiss, each with ready-to-use `x/y/w/h` coordinates
 - ✅ **Built-in QA workflow** — thumbnail generation, P0–P3 visual checklist, OOXML schema validation
-- 🔧 **OOXML editing toolkit** — unpack / edit / pack existing decks, redlining support
+- 🔧 **OOXML editing toolkit** — duplicate / clean / validate existing decks (runtime fetched from upstream at install, see License)
 
 ## 📦 Install
 
 ```bash
 npx skills add billLiao/PPT-Design-Skill --skill ppt-design-skill
+
+# First use: fetch the pptx tooling runtime from anthropics/skills (see License)
+python3 skills/ppt-design-skill/scripts/setup_upstream.py
 ```
+
+The bootstrap script is idempotent, pins an upstream commit for reproducibility, and works behind the ghfast.top mirror when GitHub is unreachable. Python deps for the fetched tooling: `pip install defusedxml lxml Pillow "markitdown[pptx]"`.
 
 ## 🗣️ Trigger Phrases
 
@@ -67,18 +72,20 @@ node demo-swiss.mjs     # → demo-swiss.pptx
 | [references/design-playbook.md](skills/ppt-design-skill/references/design-playbook.md) | **设计决策手册**: narrative arcs, page planning, theme rhythm, layout decision tree, adaptive rules, Chinese typography, density control |
 | [design-system.md](skills/ppt-design-skill/design-system.md) | 9 themes + layout coordinate quick-reference + Office-safe font pairings |
 | [pptxgenjs.md](skills/ppt-design-skill/pptxgenjs.md) | PptxGenJS API tutorial & corruption gotchas |
-| [editing.md](skills/ppt-design-skill/editing.md) | Editing existing .pptx files (unpack → edit → pack) |
+| [editing.md](skills/ppt-design-skill/editing.md) | Editing existing .pptx files (extract → edit → clean → zip → validate) |
 | [templates/layouts/](skills/ppt-design-skill/templates/layouts/) | Complete PptxGenJS layout code: 10 magazine + 22 Swiss (S01-S22) + analysis models (SWOT/PEST/canvas/double-diamond/positioning) |
 | [templates/components.md](skills/ppt-design-skill/templates/components.md) | Component cookbook (stat cards, callouts, icon rows, charts) |
 | [references/checklist.md](skills/ppt-design-skill/references/checklist.md) | P0–P3 QA checklist (.pptx specific, with no-LibreOffice fallback) |
 
 ## 📄 License
 
-This repository contains materials derived from [anthropics/skills](https://github.com/anthropics/skills) (PPTX skill) — those parts remain © Anthropic, PBC under the included [LICENSE.txt](skills/ppt-design-skill/LICENSE.txt). Original design-system content (themes, layouts, components) is provided under the same terms for consistency.
+Original content in this repository — themes, layout templates, design playbook, QA checklist, docs, and `scripts/setup_upstream.py` — is licensed under the [MIT License](LICENSE).
+
+The pptx tooling runtime (`scripts/office/*`, `add_slide.py`, `clean.py`, `thumbnail.py`) is **not included in this repository**: its license forbids redistribution. `scripts/setup_upstream.py` downloads it at install time from [anthropics/skills](https://github.com/anthropics/skills), together with that project's `LICENSE.txt`, which governs the fetched files. The fetched `upstream/SKILL.md` serves as the design-ideas reference.
 
 ## 🙏 Acknowledgments
 
-- [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/pptx) — OOXML toolkit & QA workflow
+- [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/pptx) — pptx tooling runtime (fetched at install time) & design-ideas reference
 - [op7418/guizang-ppt-skill](https://github.com/op7418/guizang-ppt-skill) — design inspiration
 
 ---
@@ -104,6 +111,9 @@ This repository contains materials derived from [anthropics/skills](https://gith
 
 ```bash
 npx skills add billLiao/PPT-Design-Skill --skill ppt-design-skill
+
+# 首次使用：从 anthropics/skills 拉取 pptx 工具链运行时（见 License 说明）
+python3 skills/ppt-design-skill/scripts/setup_upstream.py
 ```
 
 ### 触发方式
