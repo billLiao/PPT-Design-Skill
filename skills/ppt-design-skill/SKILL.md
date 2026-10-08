@@ -28,6 +28,7 @@ The script pins an upstream commit for reproducibility (`--ref` to override) and
 | Design themes & layouts | Read [design-system.md](design-system.md) |
 | Theme tokens (list/validate/extract) | `python3 scripts/theme.py list` + [references/custom-themes.md](references/custom-themes.md) |
 | Deterministic QA gate | `scripts/qa/`（溢出 / 对比度 / 边缘 / token / 字体，stdlib 独立） |
+| Outline gate (规划门禁) | `python3 scripts/qa/outline_check.py outline.json` + [references/outline-schema.md](references/outline-schema.md) |
 
 ---
 
@@ -65,7 +66,13 @@ python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacke
 
 **选主题**：`python3 scripts/theme.py list`（内置 9 套 + 项目 `./ppt-themes/` + 用户级）。发现项目/用户级主题 → 追问用户是否优先使用；用户自带品牌色 → [references/custom-themes.md](references/custom-themes.md) 的 extract 流程。
 
-产出页面规划表（页码 → 版式 → 明暗 → 内容形状 → 视觉元素）后再写代码。
+产出页面规划表（页码 → 版式 → 明暗 → 内容形状 → 视觉元素），落成 **outline.json** 并过规划门禁后再写代码：
+
+```bash
+python3 scripts/qa/outline_check.py outline.json   # exit 0=PASS；主题名/版式 id/多样性/连续重复全查
+```
+
+Schema 与注册版式 id 见 [references/outline-schema.md](references/outline-schema.md)。门禁不过先改 outline.json——规划阶段改一行，代码阶段返工一页。
 
 ### Step 2 · 生成
 
@@ -138,60 +145,15 @@ Closing     →  Same theme, dark variant or cover style
 
 ### Built-in Design System Themes
 
-Pre-configured themes with PptxGenJS-ready color values. See [design-system.md](design-system.md) for full config code.
-
-**Magazine Style** (serif titles, warm tones, editorial feel):
-
-| Theme | Ink (text/dark-bg) | Paper (light-bg) | Accent | Best for |
-|-------|-------------------|------------------|--------|----------|
-| **Ink Classic** | `0a0a0b` | `f1efea` | `d4a574` (warm gold) | General default, business, editorial |
-| **Indigo Porcelain** | `0a1f3d` | `f1f3f5` | `4a90a4` (steel blue) | Tech, research, data, AI launch |
-| **Forest Ink** | `1a2e1f` | `f5f1e8` | `6b8e5a` (moss) | Nature, culture, non-fiction |
-| **Kraft Paper** | `2a1e13` | `eedfc7` | `b87333` (copper) | Humanities, nostalgia, literature |
-| **Dune** | `1f1a14` | `f0e6d2` | `c4a265` (sand) | Art, design, creative, gallery |
-
-**Swiss Style** (sans-serif, grid-driven, high-contrast accent):
-
-| Theme | Ink | Paper | Accent | Best for |
-|-------|-----|-------|--------|----------|
-| **Swiss IKB Blue** | `1a1a1a` | `f5f5f5` | `002FA7` (Klein blue) | Minimal, data-driven, rational |
-| **Swiss Lemon Yellow** | `1a1a1a` | `f5f5f5` | `FFD700` (yellow) | Energetic, optimistic, bold |
-| **Swiss Lime Green** | `1a1a1a` | `f5f5f5` | `CCFF00` (lime) | Innovation, tech, futuristic |
-| **Swiss Safety Orange** | `1a1a1a` | `f5f5f5` | `FF5F00` (orange) | Warning, emphasis, high-impact |
+9 套内置主题（5 magazine + 4 Swiss）的完整色值与适用场景见 [design-system.md](design-system.md)。主题名即 token：`ink-classic` / `indigo-porcelain` / `forest-ink` / `kraft-paper` / `dune` / `swiss-blue` / `swiss-yellow` / `swiss-green` / `swiss-orange`（项目/用户级主题用 `python3 scripts/theme.py list` 查看）。
 
 ### Built-in Layout Templates
 
-Coordinates in [design-system.md](design-system.md); complete code in `templates/layouts/`.
-
-*Magazine Style* (10 layouts): `cover`, `section`, `big-number`, `two-column`, `image-grid`, `pipeline`, `question`, `quote`, `before-after`, `mixed`
-
-*Swiss Style* (22 layouts): `S01`-`S22` grid-based layouts with strict 12-column alignment
-
-**Layout diversity rules** (from `references/checklist.md`):
-- Avoid using the same layout for every slide — vary columns, cards, and callouts
-- Mix at least 4 different layout types per deck
-- Never use the same layout type more than 3 times in a row
-- Match information density to layout (cover = lowest, appendix = highest)
+Coordinates in [design-system.md](design-system.md); complete code in `templates/layouts/` — 杂志 10 版式 + 瑞士 S01-S22 + 分析模型 5（SWOT/PEST/画布/双钻/竞争定位）。outline.json 引用这些注册 id（全表见 [references/outline-schema.md](references/outline-schema.md)）；版式多样性与连续重复上限由 `outline_check.py` 在规划阶段强制。
 
 ### 中文安全字体（内置主题已锁定）
 
-For built-in themes, use these pre-mapped pairings (see [design-system.md](design-system.md)). **只用 Office 安全字体**——用户机器上没有的字体（Inter / Playfair / Noto 系列）会 fallback 到宋体：
-
-**Magazine Style** (serif headers, editorial):
-
-| Role | 中文 deck | 英文 deck |
-|------|-----------|-----------|
-| Title (serif) | STZhongsong（华文中宋） | Cambria |
-| Body (sans) | Microsoft YaHei | Calibri |
-| Mono (labels) | Consolas | Consolas |
-
-**Swiss Style** (sans-serif throughout, grid-driven):
-
-| Role | 中文 deck | 英文 deck |
-|------|-----------|-----------|
-| Title (sans bold) | Microsoft YaHei | Arial |
-| Body (sans) | Microsoft YaHei | Arial |
-| Mono (labels) | Consolas | Consolas |
+**只用 Office 安全字体**——用户机器上没有的字体（Inter / Playfair / Noto 系列）会 fallback 到宋体。内置主题的中英文字体配对（magazine serif / Swiss sans）已锁定在 [design-system.md](design-system.md)，直接用主题 token，不要自造字体组合（`font_check.py` 会查）。
 
 ---
 
@@ -230,60 +192,11 @@ python scripts/office/validate.py output.pptx --original src.pptx  # built from 
 
 **⚠️ USE SUBAGENTS** — even for 2-3 slides. You've been staring at the code and will see what you expect, not what's there. Subagents have fresh eyes.
 
-Convert slides to images (see [Converting to Images](#converting-to-images)), then use this prompt:
-
-```
-Visually inspect these slides. Assume there are issues — find them.
-
-Look for:
-- Overlapping elements (text through shapes, lines through words, stacked elements)
-- Text overflow or cut off at edges/box boundaries
-- Decorative lines positioned for single-line text but title wrapped to two lines
-- Source citations or footers colliding with content above
-- Elements too close (< 0.3" gaps) or cards/sections nearly touching
-- Uneven gaps (large empty area in one place, cramped in another)
-- Insufficient margin from slide edges (< 0.5")
-- Columns or similar elements not aligned consistently
-- Low-contrast text (e.g., light gray text on cream-colored background)
-- Low-contrast icons (e.g., dark icons on dark backgrounds without a contrasting circle)
-- Text boxes too narrow causing excessive wrapping
-- Leftover placeholder content
-
-For each slide, list issues or areas of concern, even if minor.
-
-Read and analyze these images:
-1. /path/to/slide-01.jpg (Expected: [brief description])
-2. /path/to/slide-02.jpg (Expected: [brief description])
-
-Report ALL issues found, including minor ones.
-```
+Convert slides to images (see [Converting to Images](#converting-to-images)), then send the ready-to-use inspection prompt in [references/checklist.md](references/checklist.md) §「子代理看图提示词」to a subagent — it checks overlaps, overflow, collisions, gaps, contrast, and leftover placeholders per slide, and reports ALL issues including minor ones.
 
 ### Pre-Flight Checklist
 
-Before declaring success, run through `references/checklist.md` (P0-P3 levels):
-
-**P0 — Must fix before delivery:**
-- [ ] No placeholder text remaining (`xxxx`, `lorem`, `ipsum`, `this page layout`)
-- [ ] No text overflow or cut-off at slide edges
-- [ ] No overlapping elements (text through shapes, lines through words)
-- [ ] Theme consistent across all slides (no mid-deck color switch)
-- [ ] Font sizes meet minimums (title >= 36pt, body >= 14pt)
-
-**P1 — Should fix:**
-- [ ] Layout variety >= 4 different types
-- [ ] No same layout repeated > 3 times in a row
-- [ ] Margins >= 0.5" on all sides
-- [ ] Contrast sufficient (no light-on-light or dark-on-dark text)
-
-**P2 — Polish:**
-- [ ] No accent lines under titles (whitespace or background color instead)
-- [ ] Icons have contrasting circular backgrounds where needed
-- [ ] Image proportions match layout slots (no stretched/squashed images)
-
-**P3 — Nice to have:**
-- [ ] File size reasonable (< 50MB for image-heavy decks)
-- [ ] Cross-device compatible fonts used
-- [ ] Print preview readable in grayscale
+Before declaring success, run through [references/checklist.md](references/checklist.md) (P0-P3 levels). **P0 must all pass before delivery**: no placeholder text, no overflow/cut-off, no overlapping elements, theme consistent, minimum font sizes.
 
 **Verification Loop**
 
@@ -310,6 +223,7 @@ Before declaring success, run through `references/checklist.md` (P0-P3 levels):
 | [templates/layouts/analysis-models.md](templates/layouts/analysis-models.md) | Business analysis layouts: SWOT / PEST / business model canvas / double diamond / competitive positioning |
 | [templates/components.md](templates/components.md) | Component cookbook (stat cards, callouts, icon rows, charts, chrome) |
 | [references/checklist.md](references/checklist.md) | P0-P3 quality checklist (.pptx specific) |
+| [references/outline-schema.md](references/outline-schema.md) | outline.json 规划门禁：schema、注册版式 id、检查规则 |
 | [references/image-prompts.md](references/image-prompts.md) | Image generation prompt guide |
 | [references/screenshot-framing.md](references/screenshot-framing.md) | Screenshot adaptation specs |
 | [references/swiss-layout-lock.md](references/swiss-layout-lock.md) | 22 registered Swiss layouts, hard constraints |

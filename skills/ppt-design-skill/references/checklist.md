@@ -104,6 +104,35 @@ for i, s in enumerate(p.slides, 1):
    python3 scripts/qa/edge_check.py slide-*.png   # 边缘裁切/空页像素门禁（先跑，PASS 再人工看图）
    ```
 2. **用子代理看图**（自己盯代码会只看到预期）。逐页检查 P0-2 / P1 的每一项。
+
+   子代理看图提示词（整段发送，替换图片路径与预期描述）：
+
+   ```
+   Visually inspect these slides. Assume there are issues — find them.
+
+   Look for:
+   - Overlapping elements (text through shapes, lines through words, stacked elements)
+   - Text overflow or cut off at edges/box boundaries
+   - Decorative lines positioned for single-line text but title wrapped to two lines
+   - Source citations or footers colliding with content above
+   - Elements too close (< 0.3" gaps) or cards/sections nearly touching
+   - Uneven gaps (large empty area in one place, cramped in another)
+   - Insufficient margin from slide edges (< 0.5")
+   - Columns or similar elements not aligned consistently
+   - Low-contrast text (e.g., light gray text on cream-colored background)
+   - Low-contrast icons (e.g., dark icons on dark backgrounds without a contrasting circle)
+   - Text boxes too narrow causing excessive wrapping
+   - Leftover placeholder content
+
+   For each slide, list issues or areas of concern, even if minor.
+
+   Read and analyze these images:
+   1. /path/to/slide-01.jpg (Expected: [brief description])
+   2. /path/to/slide-02.jpg (Expected: [brief description])
+
+   Report ALL issues found, including minor ones.
+   ```
+
 3. 环境没有 LibreOffice 时，降级方案：
    - `python -m markitdown output.pptx` 做内容核对
    - `python scripts/office/validate.py` 做结构校验
