@@ -7,10 +7,13 @@
 ## ✨ Features
 
 - 📦 **Real `.pptx` output** — editable in PowerPoint / WPS / Keynote, no HTML intermediate
-- 🎨 **9 built-in themes** — 5 magazine (serif, editorial warmth) + 4 Swiss (sans-serif, grid-driven, high-contrast)
-- 📐 **32 layout templates** — 10 magazine + 22 Swiss, each with ready-to-use `x/y/w/h` coordinates
-- ✅ **Built-in QA workflow** — thumbnail generation, P0–P3 visual checklist, OOXML schema validation
+- 🎨 **9 built-in themes as tokens** — 5 magazine (serif, editorial warmth) + 4 Swiss (sans-serif, grid-driven); themes are JSON token files (`theme.py list/validate/extract`, custom themes from brand colors)
+- 📐 **37 layout templates** — 10 magazine + 22 Swiss + 5 analysis models (SWOT/PEST/canvas/double-diamond/positioning), each with ready-to-use coordinates and content-shape annotations
+- 🧭 **Planning gate** — the deck plan (`outline.json`) is validated before any code: theme resolution, registered layout ids, diversity tiers, dark/light rhythm, action titles
+- ✅ **Deterministic QA gates** — CJK overflow estimation, WCAG contrast, render edge-bleed, deck-level token gate, Office-safe font check; stdlib-only, exit codes, CI-ready
+- 🧩 **Modular pipeline for large decks** — `scaffold_deck.py` turns the outline into `slide-NN.mjs` modules + `compile.mjs`; single-page preview; subagent-parallel fill (≤5 pages/agent)
 - 🔧 **OOXML editing toolkit** — duplicate / clean / validate existing decks (runtime fetched from upstream at install, see License)
+- 🤖 **CI included** — GitHub Actions Node 20/22 matrix runs the full gate chain on a demo deck
 
 ## 📦 Install
 
@@ -76,6 +79,18 @@ node demo-swiss.mjs     # → demo-swiss.pptx
 | [templates/layouts/](skills/ppt-design-skill/templates/layouts/) | Complete PptxGenJS layout code: 10 magazine + 22 Swiss (S01-S22) + analysis models (SWOT/PEST/canvas/double-diamond/positioning) |
 | [templates/components.md](skills/ppt-design-skill/templates/components.md) | Component cookbook (stat cards, callouts, icon rows, charts) |
 | [references/checklist.md](skills/ppt-design-skill/references/checklist.md) | P0–P3 QA checklist (.pptx specific, with no-LibreOffice fallback) |
+| [references/outline-schema.md](skills/ppt-design-skill/references/outline-schema.md) | outline.json planning gate: schema, registered layout ids, rules |
+| [references/modular-decks.md](skills/ppt-design-skill/references/modular-decks.md) | Modular pipeline for ≥15-page decks: module contract, subagent parallel fill |
+| [references/custom-themes.md](skills/ppt-design-skill/references/custom-themes.md) | Extract a theme from brand colors → validate → use |
+
+## 🆚 How it differs
+
+- **vs HTML-to-PPTX converters** — no HTML intermediate; every element is native OOXML and stays editable in PowerPoint/WPS/Keynote
+- **vs prompt-only PPT skills** — design decisions are codified (narrative playbook, layout registry, adaptive rules) and **enforced by deterministic gates**, not hoped for; the plan itself is gated before code exists
+- **vs deep-edit toolkits** — this skill generates from scratch *and* edits existing files; the editing runtime comes from [anthropics/skills](https://github.com/anthropics/skills) at install time (license-compliant)
+- **Same name, different project** — [sunchaokun/PPT-Design-Skill](https://github.com/sunchaokun/PPT-Design-Skill) is unrelated; this repo is billLiao's agent skill with theme tokens + QA gates + CI
+
+Ideas adopted from the ecosystem (thank you): locked slide-module contract & layered theme tokens (MiniMax-style pptx generators), deterministic QA + CI matrix (CacinieP/ppt-skills), theme preview grid (dashi-ppt-skill).
 
 ## 📄 License
 
@@ -137,7 +152,11 @@ node demo-dune.mjs   # 生成 demo-dune.pptx
 
 ### 质量保障
 
-内置 P0–P3 视觉检查清单（文字溢出、元素重叠、主题一致性、字号下限等）、缩略图生成脚本与 OOXML schema 校验，详见 [SKILL.md](skills/ppt-design-skill/SKILL.md)。
+**规划门禁**：写代码前先校验 outline.json（主题名 / 注册版式 id / 版式多样性 / 明暗节奏 / 行动标题），规划阶段改一行好过代码阶段返工一页。
+
+**确定性 QA 门禁**（纯 stdlib、带退出码、可进 CI）：CJK 溢出估算、WCAG 对比度、渲染边缘裁切、主题 token 门禁（硬编码色/字体即 fail）、Office 安全字体检查。另有 P0–P3 视觉检查清单与 OOXML schema 校验，详见 [SKILL.md](skills/ppt-design-skill/SKILL.md)。
+
+**大 deck 分模块**：≥15 页用 `scaffold_deck.py` 从 outline 一键生成 slide-NN.mjs + compile.mjs 工程，支持单页预览与子代理并行填充（≤5 页/代理），见 [分模块指南](skills/ppt-design-skill/references/modular-decks.md)。
 
 ### 预览图再生成
 
