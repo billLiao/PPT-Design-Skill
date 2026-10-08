@@ -11,6 +11,7 @@
   连续   同一版式连续 ≥4 页 = 违规；连续 3 页 = 警告
   明暗   variant 只能 dark/light；连续 ≥3 页同明暗 = 警告；≥8 页无深底正文页 = 警告
   视觉   缺 visual 字段 = 警告（每页至少一个视觉元素）
+  标题   话题式标签词（背景/总结/方案…）或 <4 字 = 警告（行动标题规则，design-playbook §2）
 
 用法：
   python3 scripts/qa/outline_check.py outline.json [--strict] [--json]
@@ -44,6 +45,24 @@ CUSTOM_RE = re.compile(r"^custom:[a-z0-9][a-z0-9-]*$")
 DIVERSITY_TIERS = [(6, 3), (9, 5), (10**9, 7)]
 
 VALID_VISUALS = {"image", "chart", "icon", "shape", "diagram"}
+
+# 话题式标题词（strip 后 exact match、不分大小写）——标题应写结论不写话题（design-playbook §2 行动标题）
+TOPIC_TITLES = {
+    "目录", "背景", "背景介绍", "简介", "介绍", "概述", "概况", "详情",
+    "现状", "问题", "分析", "数据", "数据情况", "方案", "方案介绍", "方案说明",
+    "计划", "规划", "目标", "优势", "劣势", "亮点", "成果", "进展", "汇报",
+    "总结", "小结", "附录", "其他", "谢谢", "感谢", "q&a", "qa",
+}
+
+
+def _check_action_title(title: str, label: str, warnings: list[str]) -> None:
+    if title.lower() in TOPIC_TITLES:
+        warnings.append(
+            f"{label}: 标题「{title}」是话题式标签——改成行动标题（写结论/判断，"
+            f"观众只读标题也能听懂故事线，见 design-playbook §2）"
+        )
+    elif len(title) < 4:
+        warnings.append(f"{label}: 标题「{title}」过短，写不下一个结论")
 
 
 def builtin_theme_names() -> list[str]:
@@ -132,6 +151,9 @@ def check(data) -> tuple[list[str], list[str], dict]:
             val = slide.get(field)
             if not isinstance(val, str) or not val.strip():
                 errors.append(f"{label}: 缺少必填字段 {field}（非空字符串）")
+        title = slide.get("title")
+        if isinstance(title, str) and title.strip():
+            _check_action_title(title.strip(), label, warnings)
 
         variant = slide.get("variant", "light")
         if variant not in ("dark", "light"):

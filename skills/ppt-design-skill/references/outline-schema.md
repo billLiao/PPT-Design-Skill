@@ -37,7 +37,7 @@ python3 scripts/qa/outline_check.py outline.json --json    # CI/脚本消费
 | `slides[].page` | 必填 | 整数，从 1 连续递增，不重不漏 |
 | `slides[].layout` | 必填 | 注册版式 id（见下表）或 `custom:<slug>` |
 | `slides[].variant` | 可选 | `dark` / `light`（缺省 light） |
-| `slides[].title` | 必填 | 非空；页面标题 |
+| `slides[].title` | 必填 | 非空；写行动标题（结论/判断，见 design-playbook §2），不写话题标签 |
 | `slides[].summary` | 必填 | 非空；一句话内容摘要（AST 状态转移的锚点，QA 时对照） |
 | `slides[].visual` | 可选 | `image` / `chart` / `icon` / `shape` / `diagram`；缺省 = 警告（每页至少一个视觉元素） |
 
@@ -61,6 +61,7 @@ python3 scripts/qa/outline_check.py outline.json --json    # CI/脚本消费
 | 连续 | 同版式连续 ≥4 页 | 违规（连续 3 页 = 警告） |
 | 明暗 | `variant` ∈ {dark, light}；连续 ≥3 页同明暗；≥8 页无深底正文页 | 警告 |
 | 视觉 | 每页应声明 visual 元素 | 警告 |
+| 标题 | 话题式标签词（背景/总结/方案…）或 <4 字 | 警告 |
 
 ## 示例（10 页 deck 片段）
 
