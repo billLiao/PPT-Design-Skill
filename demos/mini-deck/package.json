@@ -1,0 +1,11 @@
+{
+  "name": "ppt-design-skill-mini-deck",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "node compile.mjs --theme swiss-orange"
+  },
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+output.pptx
+output.pdf
+preview-*.pptx
+slide-*.png

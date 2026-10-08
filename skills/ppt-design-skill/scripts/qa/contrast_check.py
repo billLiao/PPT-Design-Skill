@@ -292,8 +292,10 @@ def check_pptx(path, min_normal, min_large, as_json):
                 if isinstance(fill, tuple):
                     bg_rgb = fill
                 elif fill == "none" or fill is None:
-                    bg_rgb = bg
-                    if bg_rgb is None and bbox is not None:
+                    # z-order semantics: an opaque shape under the text hides
+                    # the slide background, so containment wins over slide bg
+                    bg_rgb = None
+                    if bbox is not None:
                         cx_, cy_ = bbox[0] + bbox[2] / 2, bbox[1] + bbox[3] / 2
                         for other, obbox, ofill in reversed(flat):
                             if other is sp or not isinstance(ofill, tuple):
@@ -301,6 +303,8 @@ def check_pptx(path, min_normal, min_large, as_json):
                             if obbox and contains(obbox, cx_, cy_):
                                 bg_rgb = ofill
                                 break
+                    if bg_rgb is None:
+                        bg_rgb = bg
                     if bg_rgb is None:
                         bg_rgb = (1.0, 1.0, 1.0)  # white fallback
                 else:

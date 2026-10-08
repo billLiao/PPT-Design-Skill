@@ -29,6 +29,7 @@ The script pins an upstream commit for reproducibility (`--ref` to override) and
 | Theme tokens (list/validate/extract) | `python3 scripts/theme.py list` + [references/custom-themes.md](references/custom-themes.md) |
 | Deterministic QA gate | `scripts/qa/`（溢出 / 对比度 / 边缘 / token / 字体，stdlib 独立） |
 | Outline gate (规划门禁) | `python3 scripts/qa/outline_check.py outline.json` + [references/outline-schema.md](references/outline-schema.md) |
+| Modular decks (≥15 页) | `python3 scripts/scaffold_deck.py outline.json --out-dir deck --theme <name>` + [references/modular-decks.md](references/modular-decks.md) |
 
 ---
 
@@ -82,6 +83,7 @@ Schema 与注册版式 id 见 [references/outline-schema.md](references/outline-
 - 版式代码：杂志风 [templates/layouts/magazine-layouts.md](templates/layouts/magazine-layouts.md) / 瑞士风 [templates/layouts/swiss-layouts.md](templates/layouts/swiss-layouts.md) / 分析模型 [templates/layouts/analysis-models.md](templates/layouts/analysis-models.md)（SWOT/PEST/画布/双钻/竞争定位）
 - 组件配方：[templates/components.md](templates/components.md)
 - 瑞士风硬约束：[references/swiss-layout-lock.md](references/swiss-layout-lock.md)
+- **≥15 页走分模块管线**：`python3 scripts/scaffold_deck.py outline.json --out-dir deck --theme <name>` 生成 slide-NN.mjs + compile.mjs，契约与子代理并行填充见 [references/modular-decks.md](references/modular-decks.md)
 
 ### Step 3 · QA
 

@@ -1,0 +1,44 @@
+{
+  "theme": "swiss-orange",
+  "language": "zh",
+  "slides": [
+    {
+      "page": 1,
+      "layout": "S01",
+      "variant": "dark",
+      "title": "供应链 AI 落地复盘",
+      "summary": "开场：一句话定位 + 汇报人",
+      "visual": "shape"
+    },
+    {
+      "page": 2,
+      "layout": "S18",
+      "title": "为什么是现在",
+      "summary": "3 个论点 + 行业数据",
+      "visual": "chart"
+    },
+    {
+      "page": 3,
+      "layout": "S07",
+      "title": "对账效率对比",
+      "summary": "上线前后 5 项指标排名条形图",
+      "visual": "chart",
+      "variant": "dark"
+    },
+    {
+      "page": 4,
+      "layout": "S19",
+      "title": "四个部门怎么用",
+      "summary": "财务/采购/销售/仓储各一张卡",
+      "visual": "icon"
+    },
+    {
+      "page": 5,
+      "layout": "S10",
+      "variant": "dark",
+      "title": "下一步：先跑 30 天",
+      "summary": "收束 + 3 项行动请求",
+      "visual": "shape"
+    }
+  ]
+}

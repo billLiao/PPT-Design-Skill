@@ -39,7 +39,7 @@ SAFE_FONTS = {
     "stxihei", "华文细黑", "stkaiti", "华文楷体", "stfangsong", "华文仿宋",
     "stliti", "华文隶书", "lisu", "隶书", "youyuan", "幼圆",
     # 西文 Office 安全字体
-    "arial", "arial black", "calibri", "cambria", "candara", "consolas",
+    "arial", "arial black", "calibri", "calibri light", "cambria", "candara", "consolas",
     "constantia", "corbel", "courier new", "georgia", "impact",
     "palatino linotype", "tahoma", "times new roman", "trebuchet ms",
     "verdana", "segoe ui", "lucida console", "lucida sans unicode",
@@ -67,6 +67,27 @@ def fc_families() -> set[str] | None:
     return fams
 
 
+def _theme_fonts(xml: str) -> set[str]:
+    """Theme fontScheme: only majorFont/minorFont latin/ea/cs slots are author
+    choices; the per-script <a:font> fallback list is Office boilerplate present
+    in every pptxgenjs file — scanning it would flag ~40 false violations."""
+    import xml.etree.ElementTree as ET
+
+    ns = {"a": "http://schemas.openxmlformats.org/drawingml/2006/main"}
+    out: set[str] = set()
+    try:
+        root = ET.fromstring(xml)
+    except ET.ParseError:
+        return set()
+    for scheme in root.iter():
+        if scheme.tag.endswith("}majorFont") or scheme.tag.endswith("}minorFont"):
+            for child in scheme:
+                tag = child.tag.rsplit("}", 1)[-1]
+                if tag in ("latin", "ea", "cs") and child.get("typeface"):
+                    out.add(child.get("typeface"))
+    return out
+
+
 def fonts_from_pptx(path: Path) -> set[str]:
     fonts: set[str] = set()
     with zipfile.ZipFile(path) as zf:
@@ -76,6 +97,9 @@ def fonts_from_pptx(path: Path) -> set[str]:
                     and name.endswith(".xml")):
                 continue
             xml = zf.read(name).decode("utf-8", "replace")
+            if name.startswith("ppt/theme/"):
+                fonts |= _theme_fonts(xml)
+                continue
             for t in TYPEFACE_RE.findall(xml):
                 if not t.startswith("+"):  # skip theme refs like +mj-lt
                     fonts.add(t)
